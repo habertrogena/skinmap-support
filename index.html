@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkinMap Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FBF8F3;
+    --panel: #FFFFFF;
+    --ink: #2A2118;
+    --ink-soft: #6B5D4F;
+    --brown: #4A342A;
+    --gold: #B8935A;
+    --gold-light: #E8D5B5;
+    --emerald: #0F5C42;
+    --line: #E7DFD2;
+    --radius: 14px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    color: var(--brown);
+    letter-spacing: 0.01em;
+  }
+  a{ color: var(--emerald); }
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 28px 6vw;
+    border-bottom: 1px solid var(--line);
+    background: var(--panel);
+  }
+  .brand{
+    font-family:'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--brown);
+    letter-spacing: 0.02em;
+  }
+  .brand span{ color: var(--gold); }
+
+  .hero{
+    padding: 64px 6vw 40px;
+    max-width: 780px;
+  }
+  .eyebrow{
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .hero h1{
+    font-size: clamp(2.1rem, 4vw, 3rem);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero p{
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    max-width: 60ch;
+  }
+
+  .layout{
+    display:grid;
+    grid-template-columns: 240px 1fr;
+    gap: 48px;
+    padding: 20px 6vw 100px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  @media (max-width: 760px){
+    .layout{ grid-template-columns: 1fr; }
+  }
+
+  nav.toc{
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    border-left: 2px solid var(--line);
+    padding-left: 20px;
+  }
+  nav.toc div.label{
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  nav.toc a{
+    display:block;
+    text-decoration:none;
+    color: var(--ink);
+    font-size: 0.92rem;
+    padding: 7px 0;
+    border-bottom: 1px solid transparent;
+  }
+  nav.toc a:hover{ color: var(--emerald); }
+
+  .content section{
+    margin-bottom: 52px;
+    padding-bottom: 44px;
+    border-bottom: 1px solid var(--line);
+  }
+  .content section:last-child{ border-bottom:none; }
+
+  .content h2{
+    font-size: 1.6rem;
+    margin-bottom: 18px;
+    display:flex;
+    align-items:baseline;
+    gap: 10px;
+  }
+  .content h2 .num{
+    font-size: 0.95rem;
+    color: var(--gold);
+    font-family:'DM Sans', sans-serif;
+    font-weight: 600;
+  }
+
+  .faq-item{
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .faq-item h3{
+    font-family:'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .faq-item p{
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+
+  .contact-card{
+    background: linear-gradient(135deg, var(--brown), #3A2A20);
+    border-radius: var(--radius);
+    padding: 32px;
+    color: var(--gold-light);
+  }
+  .contact-card h3{
+    font-family:'Cormorant Garamond', serif;
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .contact-card p{ color: var(--gold-light); margin-bottom: 18px; font-size:0.95rem; }
+  .contact-card a.email{
+    display:inline-block;
+    background: var(--gold);
+    color: var(--brown);
+    text-decoration:none;
+    font-weight: 600;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-size: 0.92rem;
+  }
+
+  .steps{ counter-reset: step; }
+  .step{
+    display:flex;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .step::before{
+    counter-increment: step;
+    content: counter(step);
+    flex-shrink:0;
+    width: 30px; height:30px;
+    border-radius:50%;
+    background: var(--emerald);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size: 0.85rem;
+    font-weight:600;
+  }
+  .step p{ color: var(--ink-soft); font-size: 0.95rem; padding-top:3px;}
+
+  footer{
+    padding: 30px 6vw;
+    border-top: 1px solid var(--line);
+    text-align:center;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Skin<span>Map</span></div>
+  <a href="mailto:skinmapapk@gmail.com" style="text-decoration:none; font-size:0.9rem; color:var(--brown); font-weight:600;">Contact Support →</a>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">Help Center</div>
+  <h1>Support for your skin journey</h1>
+  <p>Answers to common questions about scans, subscriptions, and your account. Can't find what you need? Reach out — we typically respond within 24 hours.</p>
+</div>
+
+<div class="layout">
+  <nav class="toc">
+    <div class="label">On this page</div>
+    <a href="#getting-started">Getting Started</a>
+    <a href="#scans">Skin Scans</a>
+    <a href="#subscriptions">Subscriptions</a>
+    <a href="#account">Account & Privacy</a>
+    <a href="#contact">Contact Us</a>
+  </nav>
+
+  <div class="content">
+
+    <section id="getting-started">
+      <h2><span class="num">01</span> Getting Started</h2>
+      <div class="steps">
+        <div class="step"><p>Download SkinMap and create an account with your email or Google sign-in.</p></div>
+        <div class="step"><p>Grant camera access when prompted — this is required to perform skin scans.</p></div>
+        <div class="step"><p>Take your first scan from the home screen and receive your results within seconds.</p></div>
+      </div>
+    </section>
+
+    <section id="scans">
+      <h2><span class="num">02</span> Skin Scans</h2>
+      <div class="faq-item">
+        <h3>How accurate is my skin scan?</h3>
+        <p>SkinMap analyzes your photo using advanced imaging technology to assess hydration, texture, tone, and other visible skin characteristics. Results are intended for informational and tracking purposes, not as a medical diagnosis.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why was my scan rejected or unclear?</h3>
+        <p>Make sure you're in even, natural lighting, facing the camera directly, with your face free of makeup and centered in the frame. Avoid heavy shadows or backlighting.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I see my scan history?</h3>
+        <p>Yes — all past scans are saved to your profile so you can track changes in your skin over time.</p>
+      </div>
+    </section>
+
+    <section id="subscriptions">
+      <h2><span class="num">03</span> Subscriptions</h2>
+      <div class="faq-item">
+        <h3>What's included in each plan?</h3>
+        <p>Free includes limited scans per month. Basic and Premium unlock additional scans, deeper analysis, and consultation bookings with skincare professionals.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I cancel or change my plan?</h3>
+        <p>Go to Profile → Subscription within the app to upgrade, downgrade, or cancel at any time.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do you offer refunds?</h3>
+        <p>Refund requests are handled case by case — contact us directly and we'll help sort it out.</p>
+      </div>
+    </section>
+
+    <section id="account">
+      <h2><span class="num">04</span> Account & Privacy</h2>
+      <div class="faq-item">
+        <h3>How do I delete my account and data?</h3>
+        <p>Go to Profile → Settings → Delete Account. This permanently removes your scans, results, and personal data from our systems.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is my scan data private?</h3>
+        <p>Yes. Your scans and results are private to your account and are not shared with third parties without your consent. See our Privacy Policy for full details.</p>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2><span class="num">05</span> Still need help?</h2>
+      <div class="contact-card">
+        <h3>We're here to help</h3>
+        <p>Send us a message and our team will get back to you within one business day.</p>
+        <a class="email" href="mailto:skinmapapk@gmail.com">skinmapapk@gmail.com</a>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 SkinMap · Enkai Essence. All rights reserved.
+</footer>
+
+</body>
+</html>
